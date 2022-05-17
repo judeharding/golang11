@@ -7,6 +7,8 @@ import (
 )
 
 func formHandler(w http.ResponseWriter, r *http.Request){
+	//request is the user sending and response is coming FROM the server.
+	// star is a pointer. 
 	// var err = r.ParseForm()
 	// if err != nil {
 	if err := r.ParseForm(); err != nil {
@@ -35,12 +37,13 @@ func helloHandler(w http.ResponseWriter, r *http.Request){
 		return
 	}
 	fmt.Fprintf(w, "hello.....")
+
 }
 
 func main(){
 // starting prog
-	var fileServer = http.FileServer(http.Dir("./static"))
-	http.Handle("/", fileServer) //handles the initializer
+	var fileServer = http.FileServer(http.Dir("./static"))  // go look in the STATIC folder for the index.html
+	http.Handle("/", fileServer) //handles the initializer ROUTE 
 	http.HandleFunc("/form", formHandler)  // handles the form
 	http.HandleFunc("/hello", helloHandler)  // print hello
 
