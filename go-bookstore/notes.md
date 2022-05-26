@@ -1,3 +1,5 @@
+FOR THE BOOKSSTORE PROJ
+
 from terminal, installed these pkgs.
 
 > go mod init github.com/judeharding/golang11/go-bookstore
@@ -7,4 +9,7 @@ from terminal, installed these pkgs.
 > go get "github.com/jinzhu/gorm/dialects/mysql"
 
 > go get "github.com/gorilla/mux"
-> 1.16
+
+best to start with the routes first
+
+> 1.23
