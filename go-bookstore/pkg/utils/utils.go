@@ -1,7 +1,16 @@
-package main
+package utils
 
-import "fmt"
+import (
+	"encoding/json"
+	"io/ioutil"
+	"net/http"
+)
 
-func main() {
-	fmt.Println("Hello from utils/utils")
-}
+// Unmarshal decodes JSON array elements into corresponding Go array elements
+func ParseBody(r *http.Request, x interface{}){
+	if body, err := ioutil.ReadAll(r.Body); err == nil{
+		if err := json.Unmarshal([]byte(body), x); err != nil{
+			return 
+		}
+	}
+} 
