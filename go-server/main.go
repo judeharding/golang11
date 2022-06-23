@@ -28,15 +28,16 @@ func formHandler(w http.ResponseWriter, r *http.Request){
 }
 
 func helloHandler(w http.ResponseWriter, r *http.Request){
-	if r.URL.Path !="/hello"{
+	if r.URL.Path !="/hello"{ // checking the path
 		http.Error(w, "404 Not Found", http.StatusNotFound)
 		return
 	}
-	if r.Method != "GET" {
+	if r.Method != "GET" { // if hacking to another method, we will catch them
 		http.Error(w, "Method is not supported", http.StatusNotFound)
 		return
 	}
-	fmt.Fprintf(w, "hello.....")
+	fmt.Fprintf(w, "hello.....") // print to the screen 
+
 
 }
 
@@ -49,7 +50,7 @@ func main(){
 
 	fmt.Printf("Starting Server at port 8080 ... \n")
 
-	var err = http.ListenAndServe(":8080", nil)
+	var err = http.ListenAndServe(":8080", nil) // listen and serve creates the server
 
 	if err !=nil{
 		log.Fatal(err)
