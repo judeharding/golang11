@@ -1,52 +1,97 @@
+// "{'name':'jude','address':'456 main'}"
+
 package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 )
 
-func formHandler(w http.ResponseWriter, r *http.Request){
+
+func enableCors(res *http.ResponseWriter) {
+	(*res).Header().Set("Access-Control-Allow-Origin", "*")
+	(*res).Header().Set("Access-Control-Allow-Methods", "*")
+	(*res).Header().Set("Access-Control-Allow-Headers", "*")
+}
+
+
+func formHandler(res http.ResponseWriter, req *http.Request){
 	//request is the user sending and response is coming FROM the server.
 	// star is a pointer. 
 	// var err = r.ParseForm()
 	// if err != nil {
-	if err := r.ParseForm(); err != nil {
-		fmt. Fprintf(w, "ParseForm() err: %v ", err)
-		return
+	enableCors(&res)
+
+
+	// if err := req.ParseForm(); err != nil {
+	// 	fmt. Fprintf(res, "ParseForm() err: %v ", err)
+	// 	return
+	// }
+
+	fmt.Fprintf(res, "POST request successful...\n")
+
+  type Member struct {
+		name string `json:"name"`
+		address string `json:"address"`
 	}
-	fmt.Fprintf(w, "POST request successful\n...")
+	
+	jsonBody, _ := ioutil.ReadAll(req.Body)
+	// maybe, _ := strconv.Unquote(fmt.Sprintf(`"%s"`, jsonBody))
+	// if err != nil{
+	// 	log.Fatal("FATAL ERROR IN formhandler-JSONBODY", err)
+	// }
 
-	var name = r.FormValue("name")
-	var address = r.FormValue("address")
 
-	fmt.Fprintf(w, "Name = %s\n", name)
-	fmt.Fprintf(w, "Address = %s\n", address)
+	fmt.Printf("%s", jsonBody)
+	// fmt.Sprintf("%s", maybe)
 
-	fmt.Printf("NAME is %v ... \n", name)
-	fmt.Printf("ADDRESS is %v ... \n", address)
+
+
+	// var response Member 
+	// json.Unmarshal(jsonBody, &response)
+
+	// fmt.Println("PRINTING.....x ", jsonBody)
+	// fmt.Println("RESPONSE???", response.name)
+
+
+
+
+	// var name = req.FormValue("name")
+	// var address = req.FormValue("address")
+
+	// prints to the screen 
+	// fmt.Fprintf(res, "Name = %s\n", name)
+	// fmt.Fprintf(res, "Address = %s\n", address)
+
+	// prints to the terminal
+	// fmt.Printf("NAME is %v ... \n", name)
+	// fmt.Printf("ADDRESS is %v ... \n", address)
 }
 
-func helloHandler(w http.ResponseWriter, r *http.Request){
-	if r.URL.Path !="/hello"{ // checking the path
-		http.Error(w, "404 Not Found", http.StatusNotFound)
+func helloHandler(res http.ResponseWriter, req *http.Request){
+	if req.URL.Path !="/hello"{ // checking the path
+		http.Error(res, "404 Not Found", http.StatusNotFound)
 		return
 	}
-	if r.Method != "GET" { // if hacking to another method, we will catch them
-		http.Error(w, "Method is not supported", http.StatusNotFound)
+	if req.Method != "GET" { // if hacking to another method, we will catch them
+		http.Error(res, "Method is not supported", http.StatusNotFound)
 		return
 	}
-	fmt.Fprintf(w, "hello.....") // print to the screen 
+	fmt.Fprintf(res, "hello.....") // print to the screen 
 
 
 }
 
 func main(){
-// starting prog
-	var fileServer = http.FileServer(http.Dir("./static"))  // go look in the STATIC folder for the index.html
-	http.Handle("/", fileServer) //handles the initializer ROUTE 
+
+	
+// starting webserver
+	// var fileServer = http.FileServer(http.Dir("./static"))  // go look in the STATIC folder for the index.html
+	// http.Handle("/", fileServer) //handles the initializer ROUTE 
 	http.HandleFunc("/form", formHandler)  // handles the form
-	http.HandleFunc("/hello", helloHandler)  // print hello
+	// http.HandleFunc("/hello", helloHandler)  // print hello
 
 	fmt.Printf("Starting Server at port 8080 ... \n")
 
@@ -56,28 +101,3 @@ func main(){
 		log.Fatal(err)
 	}
 }
-
-// package main
-
-// import (
-// 	"fmt"
-// 	"time"
-// )
-// func main(){
-
-// var start  = time.Now()
-
-// var sum = 0
-
-// 	for i := 0; i <= 1000000; i++ {
-// 		sum = i 
-// 		fmt.Printf("%v\n", sum)
-// 	}
-
-// t := time.Now()
-// elapsed := t.Sub(start) * 1000
-
-
-// fmt.Printf("\nENDING NOW...  %v", elapsed)
-
-// }
