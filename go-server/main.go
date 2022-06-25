@@ -30,11 +30,11 @@ func formHandler(res http.ResponseWriter, req *http.Request){
 	// 	return
 	// }
 
-	fmt.Fprintf(res, "POST request successful...\n")
+	fmt.Fprintf(res, "POST request successful...xx\n")
 
   type Member struct {
-		name string `json:"name"`
-		address string `json:"address"`
+		Name string `json:"name"`
+		Address string `json:"address"`
 	}
 	
 	jsonBody, _ := ioutil.ReadAll(req.Body)
@@ -52,7 +52,7 @@ func formHandler(res http.ResponseWriter, req *http.Request){
 	// var response Member 
 	// json.Unmarshal(jsonBody, &response)
 
-	// fmt.Println("PRINTING.....x ", jsonBody)
+	fmt.Println("PRINTING.....x ", jsonBody)
 	// fmt.Println("RESPONSE???", response.name)
 
 
