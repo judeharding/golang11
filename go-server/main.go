@@ -26,7 +26,7 @@ func formHandler(res http.ResponseWriter, req *http.Request){
 		Name string `json:"name"`
 		Address string `json:"address"`
 	}
-	
+	// instead of a hard coded string, we need to run off to a mysql and turns into a result insteadof a hard coded string
 	jsonBody := []byte(`{"name":"jude","address":"456 main"}`)
 
 	member := &Member{}
