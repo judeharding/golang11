@@ -81,7 +81,7 @@ func main(){
 
 	fmt.Printf("Starting Server at port 8080 ... \n")
 
-	var err = http.ListenAndServe(":8080", nil) // listen and serve creates the server
+	var err = http.ListenAndServe("0.0.0.0:8080", nil) // listen and serve creates the server
 
 	if err !=nil{
 		log.Fatal(err)
